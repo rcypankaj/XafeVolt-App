@@ -1,0 +1,11 @@
+# .prettierignore
+
+# Ignore expo-env.d.ts file
+expo-env.d.ts
+
+/.expo
+node_modules
+metro.config.js
+
+# /android
+# /ios
