@@ -1,21 +1,28 @@
-import React from 'react';
+import { useTheme } from '@/context/ThemeContext';
 import { Tabs } from 'expo-router';
-import { Chrome as Home, User, Bell, Settings } from 'lucide-react-native';
-import Colors from '@/constants/Colors';
+import {
+  Bell,
+  Chrome as Home,
+  Settings,
+  User,
+  Info,
+} from 'lucide-react-native';
+import React from 'react';
 
 export default function TabsLayout() {
+  const { colors } = useTheme();
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors.light.primary,
-        tabBarInactiveTintColor: Colors.light.tabIconDefault,
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.tabIconDefault,
         tabBarStyle: {
           borderTopWidth: 1,
-          borderTopColor: Colors.light.border,
+          borderTopColor: colors.border,
           elevation: 0,
-          height: 60,
           paddingBottom: 8,
           paddingTop: 8,
+          backgroundColor: colors.card,
         },
         tabBarLabelStyle: {
           fontFamily: 'Inter-Medium',
@@ -29,6 +36,13 @@ export default function TabsLayout() {
         options={{
           title: 'Home',
           tabBarIcon: ({ color, size }) => <Home size={size} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="details"
+        options={{
+          title: 'Info',
+          tabBarIcon: ({ color, size }) => <Info size={size} color={color} />,
         }}
       />
       <Tabs.Screen
@@ -49,7 +63,9 @@ export default function TabsLayout() {
         name="settings"
         options={{
           title: 'Settings',
-          tabBarIcon: ({ color, size }) => <Settings size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <Settings size={size} color={color} />
+          ),
         }}
       />
     </Tabs>

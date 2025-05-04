@@ -1,22 +1,24 @@
+import Button from '@/components/Atoms/Button';
+import FormInput from '@/components/Atoms/FormInput';
+import { ThemedText } from '@/components/ThemedText';
+import Colors from '@/constants/Colors';
+import { Spacing } from '@/constants/Theme';
+import { useAuth } from '@/context/AuthContext';
+import { useTheme } from '@/context/ThemeContext';
+import { router } from 'expo-router';
+import { ChevronLeft } from 'lucide-react-native';
 import React, { useState } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
   KeyboardAvoidingView,
   Platform,
-  TouchableOpacity,
   ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import { router } from 'expo-router';
-import { useAuth } from '@/context/AuthContext';
-import FormInput from '@/components/Atoms/FormInput';
-import Button from '@/components/Atoms/Button';
-import Colors from '@/constants/Colors';
-import { ChevronLeft } from 'lucide-react-native';
-import { Spacing } from '@/constants/Theme';
 
 export default function SignupScreen() {
+  const { colors } = useTheme(); // Get dynamic theme colors
   const { updateUser } = useAuth();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -58,7 +60,7 @@ export default function SignupScreen() {
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      style={[styles.container, { backgroundColor: colors.background }]}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
     >
@@ -68,16 +70,23 @@ export default function SignupScreen() {
       >
         <View style={styles.header}>
           <TouchableOpacity
-            style={styles.backButton}
+            style={[styles.backButton, { backgroundColor: colors.border }]}
             onPress={() => router.back()}
           >
-            <ChevronLeft size={24} color={Colors.light.text} />
+            <ChevronLeft size={24} color={colors.text} />
           </TouchableOpacity>
-          <Text style={styles.title}>Create account</Text>
+          <ThemedText
+            style={[styles.title, { color: colors.text }]}
+            type="title"
+          >
+            Create account
+          </ThemedText>
         </View>
 
         <View style={styles.formContainer}>
-          <Text style={styles.subtitle}>Let's start with your name</Text>
+          <ThemedText style={[styles.subtitle, { color: colors.darkGray }]}>
+            Let's start with your name
+          </ThemedText>
 
           <FormInput
             label="First Name"
@@ -110,15 +119,15 @@ export default function SignupScreen() {
         </View>
 
         <View style={styles.footer}>
-          <Text style={styles.footerText}>
+          <ThemedText style={[styles.footerText, { color: colors.darkGray }]}>
             Already have an account?{' '}
-            <Text
-              style={styles.loginLink}
+            <ThemedText
+              style={[styles.loginLink, { color: colors.primary }]}
               onPress={() => router.push('/login')}
             >
               Log in
-            </Text>
-          </Text>
+            </ThemedText>
+          </ThemedText>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -128,7 +137,6 @@ export default function SignupScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.background,
   },
   scrollContainer: {
     flexGrow: 1,
@@ -142,7 +150,6 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: 'rgba(0, 0, 0, 0.05)',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 16,
@@ -154,8 +161,6 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontFamily: 'Inter-Regular',
-    fontSize: 16,
-    color: Colors.light.darkGray,
     marginBottom: 24,
     lineHeight: 22,
   },
@@ -176,11 +181,8 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontFamily: 'Inter-Regular',
-    fontSize: 16,
-    color: Colors.light.darkGray,
   },
   loginLink: {
     fontFamily: 'Inter-SemiBold',
-    color: Colors.light.primary,
   },
 });

@@ -39,7 +39,9 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
             key={index}
             style={[
               styles.step,
-              index + 1 <= currentStep ? styles.stepActive : styles.stepInactive,
+              index + 1 <= currentStep
+                ? styles.stepActive
+                : styles.stepInactive,
             ]}
           />
         ))}

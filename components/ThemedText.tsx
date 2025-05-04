@@ -46,7 +46,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: 'bold',
-    lineHeight: 32,
+    lineHeight: 42,
+    fontFamily: 'PlusJakartaSans-Bold',
   },
   subtitle: {
     fontSize: 20,

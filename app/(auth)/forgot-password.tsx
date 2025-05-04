@@ -1,23 +1,24 @@
+import Button from '@/components/Atoms/Button';
+import PhoneInput from '@/components/Atoms/PhoneInput';
+import { ThemedText } from '@/components/ThemedText';
+import { useAuth } from '@/context/AuthContext';
+import { useTheme } from '@/context/ThemeContext';
+import { router } from 'expo-router';
+import { ChevronLeft } from 'lucide-react-native';
 import React, { useState } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
   KeyboardAvoidingView,
   Platform,
-  TouchableOpacity,
   ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import { router } from 'expo-router';
-import { useAuth } from '@/context/AuthContext';
-import PhoneInput from '@/components/Atoms/PhoneInput';
-import Button from '@/components/Atoms/Button';
-import Colors from '@/constants/Colors';
-import { ChevronLeft } from 'lucide-react-native';
-import { Spacing } from '@/constants/Theme';
 
 export default function ForgotPasswordScreen() {
+  const { colors } = useTheme(); // Get dynamic theme colors
   const { updateUser } = useAuth();
+
   const [recoveryPhone, setRecoveryPhone] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -50,7 +51,7 @@ export default function ForgotPasswordScreen() {
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      style={[styles.container, { backgroundColor: colors.background }]}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
     >
@@ -60,18 +61,23 @@ export default function ForgotPasswordScreen() {
       >
         <View style={styles.header}>
           <TouchableOpacity
-            style={styles.backButton}
+            style={[styles.backButton, { backgroundColor: colors.border }]}
             onPress={() => router.back()}
           >
-            <ChevronLeft size={24} color={Colors.light.text} />
+            <ChevronLeft size={24} color={colors.text} />
           </TouchableOpacity>
-          <Text style={styles.title}>Forgot password</Text>
+          <ThemedText
+            style={[styles.title, { color: colors.text }]}
+            type="title"
+          >
+            Forgot password
+          </ThemedText>
         </View>
 
         <View style={styles.formContainer}>
-          <Text style={styles.subtitle}>
+          <ThemedText style={[styles.subtitle, { color: colors.darkGray }]}>
             Enter your recovery phone number to reset your password
-          </Text>
+          </ThemedText>
 
           <PhoneInput
             label="Recovery Phone Number"
@@ -95,7 +101,9 @@ export default function ForgotPasswordScreen() {
             style={styles.loginLink}
             onPress={() => router.push('/login')}
           >
-            <Text style={styles.loginText}>Back to Login</Text>
+            <ThemedText style={[styles.loginText, { color: colors.primary }]}>
+              Back to Login
+            </ThemedText>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -106,7 +114,6 @@ export default function ForgotPasswordScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.background,
   },
   scrollContainer: {
     flexGrow: 1,
@@ -120,20 +127,15 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: 'rgba(0, 0, 0, 0.05)',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 16,
   },
   title: {
     fontFamily: 'PlusJakartaSans-Bold',
-    fontSize: 32,
-    color: Colors.light.text,
   },
   subtitle: {
     fontFamily: 'Inter-Regular',
-    fontSize: 16,
-    color: Colors.light.darkGray,
     marginBottom: 24,
     lineHeight: 22,
   },
@@ -151,7 +153,5 @@ const styles = StyleSheet.create({
   },
   loginText: {
     fontFamily: 'Inter-Medium',
-    fontSize: 16,
-    color: Colors.light.primary,
   },
 });

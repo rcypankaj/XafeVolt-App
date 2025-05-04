@@ -1,25 +1,25 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Platform,
-  ScrollView,
-} from 'react-native';
-import { router } from 'expo-router';
 import Button from '@/components/Atoms/Button';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Shield, Fingerprint, Smartphone } from 'lucide-react-native';
+import { ThemedText } from '@/components/ThemedText';
 import { Spacing } from '@/constants/Theme';
 import { useTheme } from '@/context/ThemeContext';
+import { LinearGradient } from 'expo-linear-gradient';
+import { router } from 'expo-router';
+import { Fingerprint, Shield, Smartphone } from 'lucide-react-native';
+import React from 'react';
+import {
+  Image,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 export default function WelcomeScreen() {
   const { colors, theme } = useTheme();
 
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: colors.background }}>
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         <LinearGradient
           colors={[
@@ -40,10 +40,12 @@ export default function WelcomeScreen() {
             }}
             style={styles.logo}
           />
-          <Text style={[styles.title, { color: colors.text }]}>SecureAuth</Text>
-          <Text style={[styles.subtitle, { color: colors.darkGray }]}>
+          <ThemedText style={{ color: colors.text }} type="title">
+            SecureAuth
+          </ThemedText>
+          <ThemedText style={[styles.subtitle, { color: colors.darkGray }]}>
             Secure authentication with biometric verification
-          </Text>
+          </ThemedText>
         </View>
 
         <View style={styles.featuresContainer}>
@@ -87,9 +89,11 @@ export default function WelcomeScreen() {
           style={styles.forgotPasswordLink}
           onPress={() => router.push('/forgot-password')}
         >
-          <Text style={[styles.forgotPasswordText, { color: colors.primary }]}>
+          <ThemedText
+            style={[styles.forgotPasswordText, { color: colors.primary }]}
+          >
             Forgot Password?
-          </Text>
+          </ThemedText>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -119,10 +123,14 @@ const FeatureItem: React.FC<FeatureItemProps> = ({
       {icon}
     </View>
     <View style={styles.featureTextContainer}>
-      <Text style={[styles.featureTitle, { color: colors.text }]}>{title}</Text>
-      <Text style={[styles.featureDescription, { color: colors.darkGray }]}>
+      <ThemedText style={[styles.featureTitle, { color: colors.text }]}>
+        {title}
+      </ThemedText>
+      <ThemedText
+        style={[styles.featureDescription, { color: colors.darkGray }]}
+      >
         {description}
-      </Text>
+      </ThemedText>
     </View>
   </View>
 );
@@ -150,11 +158,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginBottom: 24,
   },
-  title: {
-    fontFamily: 'PlusJakartaSans-Bold',
-    fontSize: 32,
-    marginBottom: 12,
-  },
+
   subtitle: {
     fontFamily: 'Inter-Regular',
     fontSize: 16,
@@ -190,7 +194,6 @@ const styles = StyleSheet.create({
   },
   featureTitle: {
     fontFamily: 'Inter-SemiBold',
-    fontSize: 16,
     marginBottom: 4,
   },
   featureDescription: {
@@ -209,6 +212,5 @@ const styles = StyleSheet.create({
   },
   forgotPasswordText: {
     fontFamily: 'Inter-Medium',
-    fontSize: 16,
   },
 });

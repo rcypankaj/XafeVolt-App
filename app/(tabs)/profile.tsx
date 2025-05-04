@@ -1,9 +1,23 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '@/context/AuthContext';
 import Colors from '@/constants/Colors';
-import { CreditCard as Edit, Shield, Phone, BookUser, ArrowRightLeft, LogOut } from 'lucide-react-native';
+import {
+  CreditCard as Edit,
+  Shield,
+  Phone,
+  BookUser,
+  ArrowRightLeft,
+  LogOut,
+} from 'lucide-react-native';
 import { Spacing } from '@/constants/Theme';
 
 export default function ProfileScreen() {
@@ -27,12 +41,18 @@ export default function ProfileScreen() {
 
         <View style={styles.profileCard}>
           <Image
-            source={{ uri: 'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' }}
+            source={{
+              uri: 'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+            }}
             style={styles.profileImage}
           />
           <View style={styles.profileInfo}>
-            <Text style={styles.profileName}>{user?.firstName || 'John'} {user?.lastName || 'Doe'}</Text>
-            <Text style={styles.profilePhone}>{user?.phoneNumber || '+1 (555) 123-4567'}</Text>
+            <Text style={styles.profileName}>
+              {user?.firstName || 'John'} {user?.lastName || 'Doe'}
+            </Text>
+            <Text style={styles.profilePhone}>
+              {user?.phoneNumber || '+1 (555) 123-4567'}
+            </Text>
           </View>
           <TouchableOpacity style={styles.editButton}>
             <Edit size={20} color={Colors.light.primary} />
@@ -44,43 +64,43 @@ export default function ProfileScreen() {
             <Shield size={24} color={Colors.light.primary} />
             <Text style={styles.securityTitle}>Security Status</Text>
           </View>
-          
+
           <View style={styles.securityItems}>
-            <SecurityStatusItem 
-              title="Phone Verification" 
-              isVerified={securityStatus.phoneVerified} 
+            <SecurityStatusItem
+              title="Phone Verification"
+              isVerified={securityStatus.phoneVerified}
             />
-            <SecurityStatusItem 
-              title="Biometric Authentication" 
-              isVerified={securityStatus.biometricsEnabled} 
+            <SecurityStatusItem
+              title="Biometric Authentication"
+              isVerified={securityStatus.biometricsEnabled}
             />
-            <SecurityStatusItem 
-              title="Security Questions" 
-              isVerified={securityStatus.securityQuestionsSet} 
+            <SecurityStatusItem
+              title="Security Questions"
+              isVerified={securityStatus.securityQuestionsSet}
             />
-            <SecurityStatusItem 
-              title="Recovery Phone" 
-              isVerified={securityStatus.recoveryPhoneSet} 
+            <SecurityStatusItem
+              title="Recovery Phone"
+              isVerified={securityStatus.recoveryPhoneSet}
             />
           </View>
         </View>
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Account</Text>
-          
-          <ProfileMenuItem 
+
+          <ProfileMenuItem
             icon={<Phone size={24} color={Colors.light.primary} />}
             title="Phone Number"
             value={user?.phoneNumber || '+1 (555) 123-4567'}
           />
-          
-          <ProfileMenuItem 
+
+          <ProfileMenuItem
             icon={<BookUser size={24} color={Colors.light.primary} />}
             title="Personal Information"
             value="Edit your profile details"
           />
-          
-          <ProfileMenuItem 
+
+          <ProfileMenuItem
             icon={<ArrowRightLeft size={24} color={Colors.light.primary} />}
             title="Account Activity"
             value="View recent logins"
@@ -90,18 +110,15 @@ export default function ProfileScreen() {
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Security</Text>
-          
-          <ProfileMenuItem 
+
+          <ProfileMenuItem
             icon={<Shield size={24} color={Colors.light.primary} />}
             title="Security Settings"
             value="Manage your security preferences"
           />
         </View>
 
-        <TouchableOpacity 
-          style={styles.logoutButton}
-          onPress={logout}
-        >
+        <TouchableOpacity style={styles.logoutButton} onPress={logout}>
           <LogOut size={24} color={Colors.light.error} />
           <Text style={styles.logoutText}>Log Out</Text>
         </TouchableOpacity>
@@ -115,17 +132,24 @@ interface SecurityStatusItemProps {
   isVerified: boolean;
 }
 
-const SecurityStatusItem: React.FC<SecurityStatusItemProps> = ({ title, isVerified }) => (
+const SecurityStatusItem: React.FC<SecurityStatusItemProps> = ({
+  title,
+  isVerified,
+}) => (
   <View style={styles.securityStatusItem}>
     <Text style={styles.securityStatusTitle}>{title}</Text>
-    <View style={[
-      styles.securityStatusIndicator,
-      isVerified ? styles.verified : styles.notVerified
-    ]}>
-      <Text style={[
-        styles.securityStatusText,
-        isVerified ? styles.verifiedText : styles.notVerifiedText
-      ]}>
+    <View
+      style={[
+        styles.securityStatusIndicator,
+        isVerified ? styles.verified : styles.notVerified,
+      ]}
+    >
+      <Text
+        style={[
+          styles.securityStatusText,
+          isVerified ? styles.verifiedText : styles.notVerifiedText,
+        ]}
+      >
         {isVerified ? 'Verified' : 'Pending'}
       </Text>
     </View>
@@ -139,7 +163,12 @@ interface ProfileMenuItemProps {
   showBadge?: boolean;
 }
 
-const ProfileMenuItem: React.FC<ProfileMenuItemProps> = ({ icon, title, value, showBadge }) => (
+const ProfileMenuItem: React.FC<ProfileMenuItemProps> = ({
+  icon,
+  title,
+  value,
+  showBadge,
+}) => (
   <TouchableOpacity style={styles.menuItem}>
     <View style={styles.menuItemIcon}>{icon}</View>
     <View style={styles.menuItemTextContainer}>

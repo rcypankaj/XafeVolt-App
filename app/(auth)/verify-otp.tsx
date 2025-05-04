@@ -1,23 +1,23 @@
-import React, { useState, useEffect, useRef } from 'react';
+import Button from '@/components/Atoms/Button';
+import OTPInput from '@/components/Atoms/OTPInput';
+import { ThemedText } from '@/components/ThemedText';
+import { useAuth } from '@/context/AuthContext';
+import { useTheme } from '@/context/ThemeContext';
+import { router, useLocalSearchParams } from 'expo-router';
+import { ChevronLeft } from 'lucide-react-native';
+import React, { useEffect, useRef, useState } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
+  Alert,
   KeyboardAvoidingView,
   Platform,
-  TouchableOpacity,
   ScrollView,
-  Alert,
+  StyleSheet,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import { router, useLocalSearchParams } from 'expo-router';
-import OTPInput from '@/components/Atoms/OTPInput';
-import Button from '@/components/Atoms/Button';
-import Colors from '@/constants/Colors';
-import { ChevronLeft } from 'lucide-react-native';
-import { useAuth } from '@/context/AuthContext';
-import { Spacing } from '@/constants/Theme';
 
 export default function VerifyOTPScreen() {
+  const { colors } = useTheme();
   const { updateUser, setToken } = useAuth();
   const params = useLocalSearchParams<{ mode: string; phone: string }>();
   const mode = params.mode || 'login';
@@ -112,7 +112,7 @@ export default function VerifyOTPScreen() {
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      style={[styles.container, { backgroundColor: colors.background }]}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
     >
@@ -122,18 +122,20 @@ export default function VerifyOTPScreen() {
       >
         <View style={styles.header}>
           <TouchableOpacity
-            style={styles.backButton}
+            style={[styles.backButton, { backgroundColor: colors.border }]}
             onPress={() => router.back()}
           >
-            <ChevronLeft size={24} color={Colors.light.text} />
+            <ChevronLeft size={24} color={colors.text} />
           </TouchableOpacity>
-          <Text style={styles.title}>Verification code</Text>
+          <ThemedText style={{ color: colors.text }} type="title">
+            Verification code
+          </ThemedText>
         </View>
 
         <View style={styles.formContainer}>
-          <Text style={styles.subtitle}>
+          <ThemedText style={[styles.subtitle, { color: colors.darkGray }]}>
             Enter the 6-digit code sent to {phoneNumber}
-          </Text>
+          </ThemedText>
 
           <OTPInput
             length={6}
@@ -147,15 +149,19 @@ export default function VerifyOTPScreen() {
           />
 
           <View style={styles.timerContainer}>
-            <Text style={styles.timerText}>
+            <ThemedText style={[styles.timerText, { color: colors.darkGray }]}>
               {timeLeft > 0
                 ? `Resend code in ${formatTime(timeLeft)}s`
                 : "Didn't receive the code?"}
-            </Text>
+            </ThemedText>
 
             {timeLeft === 0 && (
               <TouchableOpacity onPress={handleResendCode}>
-                <Text style={styles.resendLink}>Resend Code</Text>
+                <ThemedText
+                  style={[styles.resendLink, { color: colors.primary }]}
+                >
+                  Resend Code
+                </ThemedText>
               </TouchableOpacity>
             )}
           </View>
@@ -177,7 +183,6 @@ export default function VerifyOTPScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.background,
   },
   scrollContainer: {
     flexGrow: 1,
@@ -191,20 +196,12 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: 'rgba(0, 0, 0, 0.05)',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 16,
   },
-  title: {
-    fontFamily: 'PlusJakartaSans-Bold',
-    fontSize: 32,
-    color: Colors.light.text,
-  },
   subtitle: {
     fontFamily: 'Inter-Regular',
-    fontSize: 16,
-    color: Colors.light.darkGray,
     marginBottom: 32,
     lineHeight: 22,
   },
@@ -218,13 +215,10 @@ const styles = StyleSheet.create({
   timerText: {
     fontFamily: 'Inter-Regular',
     fontSize: 14,
-    color: Colors.light.darkGray,
     marginBottom: 8,
   },
   resendLink: {
     fontFamily: 'Inter-SemiBold',
-    fontSize: 16,
-    color: Colors.light.primary,
   },
   button: {
     marginBottom: 24,

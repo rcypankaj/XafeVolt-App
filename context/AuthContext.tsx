@@ -75,7 +75,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       token: null,
     });
     // Redirect to the login screen
-    router.replace('/');
+    router.replace('/login');
   };
 
   // Update user data
