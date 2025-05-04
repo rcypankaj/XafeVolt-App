@@ -1,7 +1,32 @@
 const tintColorLight = '#0A84FF';
 const tintColorDark = '#0A84FF';
 
-export default {
+export type ColorTheme = {
+  text: string;
+  background: string;
+  tint: string;
+  tabIconDefault: string;
+  tabIconSelected: string;
+  primary: string;
+  secondary: string;
+  accent: string;
+  success: string;
+  warning: string;
+  error: string;
+  card: string;
+  border: string;
+  notification: string;
+  placeholder: string;
+  disabled: string;
+  darkGray: string;
+};
+
+export type ThemeColors = {
+  light: ColorTheme;
+  dark: ColorTheme;
+};
+
+const Colors: ThemeColors = {
   light: {
     text: '#000000',
     background: '#FFFFFF',
@@ -41,3 +66,5 @@ export default {
     darkGray: '#8E8E93',
   },
 };
+
+export default Colors;

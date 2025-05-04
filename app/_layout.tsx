@@ -1,6 +1,3 @@
-import Colors from '@/constants/Colors';
-import { AuthProvider } from '@/context/AuthContext';
-import { useFrameworkReady } from '@/hooks/useFrameworkReady';
 import {
   Inter_400Regular,
   Inter_500Medium,
@@ -14,11 +11,21 @@ import {
   PlusJakartaSans_600SemiBold,
   PlusJakartaSans_700Bold,
 } from '@expo-google-fonts/plus-jakarta-sans';
-import { Stack } from 'expo-router';
+import { SplashScreen, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { useEffect, useState } from 'react';
+
+import { SplashScreen as CustomSplashScreen } from '@/components/Molecules/SplashScreen';
+import { AuthProvider } from '@/context/AuthContext';
+import { useFrameworkReady } from '@/hooks/useFrameworkReady';
+import { ThemeProvider } from '@/context/ThemeContext';
+
+// Prevent the splash screen from auto-hiding before asset loading is complete.
+SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  const [showSplash, setShowSplash] = useState(true);
+
   useFrameworkReady();
 
   // Load fonts
@@ -34,37 +41,28 @@ export default function RootLayout() {
   });
 
   // Show loading screen while fonts are loading
-  if (!fontsLoaded && !fontError) {
+  useEffect(() => {
+    if (fontsLoaded || fontError) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded, fontError]);
+
+  if (showSplash) {
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={Colors.light.primary} />
-        <Text style={styles.loadingText}>Loading...</Text>
-      </View>
+      <CustomSplashScreen onAnimationComplete={() => setShowSplash(false)} />
     );
   }
 
   return (
-    <AuthProvider>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" options={{ title: 'Oops!' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" options={{ title: 'Oops!' }} />
+        </Stack>
+        <StatusBar style="auto" />
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: Colors.light.background,
-  },
-  loadingText: {
-    marginTop: 16,
-    fontSize: 16,
-    color: Colors.light.text,
-  },
-});
