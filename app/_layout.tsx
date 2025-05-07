@@ -39,6 +39,17 @@ export default function RootLayout() {
     'PlusJakartaSans-SemiBold': PlusJakartaSans_600SemiBold,
     'PlusJakartaSans-Bold': PlusJakartaSans_700Bold,
   });
+  
+  const {
+    isUpdatePending
+  } = Updates.useUpdates();
+
+  useEffect(() => {
+    if (isUpdatePending) {
+      // Update has successfully downloaded; apply it now
+      Updates.reloadAsync();
+    }
+  }, [isUpdatePending]);
 
   // Show loading screen while fonts are loading
   useEffect(() => {
