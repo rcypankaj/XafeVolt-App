@@ -23,7 +23,7 @@
           "keyPassword": "${KEY_PASSWORD}"
         }
       }
-    }
+    },
     "production": {
       "autoIncrement": true,
       "android": {
