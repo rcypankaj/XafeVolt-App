@@ -1,44 +1,23 @@
-import { StyleSheet } from 'react-native';
-
 import Dashboard from '@/components/Dashboard';
-import { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useAuth } from '@/context/AuthContext';
+import { useTheme } from '@/context/ThemeContext';
+import React from 'react';
+import { SafeAreaView, StatusBar } from 'react-native';
 
 export default function HomeScreen() {
-  const bgScale = useSharedValue(0.8);
-  const bgRotate = useSharedValue(0);
-  const backgroundStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: bgScale.value }, { rotate: `${bgRotate.value}deg` }],
-  }));
+  const { colors } = useTheme();
+  const { authState } = useAuth();
+  const user = authState.user;
+
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView
+      style={{
+        flex: 1,
+        paddingTop: StatusBar.currentHeight,
+        backgroundColor: colors.background,
+      }}
+    >
       <Dashboard />
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  background: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});

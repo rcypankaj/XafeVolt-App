@@ -1,26 +1,70 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
+const tintColorLight = '#0A84FF';
+const tintColorDark = '#0A84FF';
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
+export type ColorTheme = {
+  text: string;
+  background: string;
+  tint: string;
+  tabIconDefault: string;
+  tabIconSelected: string;
+  primary: string;
+  secondary: string;
+  accent: string;
+  success: string;
+  warning: string;
+  error: string;
+  card: string;
+  border: string;
+  notification: string;
+  placeholder: string;
+  disabled: string;
+  darkGray: string;
+};
 
-export const Colors = {
+export type ThemeColors = {
+  light: ColorTheme;
+  dark: ColorTheme;
+};
+
+const Colors: ThemeColors = {
   light: {
-    text: '#11181C',
-    background: '#fff',
+    text: '#000000',
+    background: '#FFFFFF',
     tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
+    tabIconDefault: '#8E8E93',
     tabIconSelected: tintColorLight,
+    primary: '#0A84FF',
+    secondary: '#5E5CE6',
+    accent: '#FF9F0A',
+    success: '#30D158',
+    warning: '#FF9F0A',
+    error: '#FF453A',
+    card: '#FFFFFF',
+    border: '#E5E5EA',
+    notification: '#FF3B30',
+    placeholder: '#8E8E93',
+    disabled: '#AEAEB2',
+    darkGray: '#636366',
   },
   dark: {
-    text: '#ECEDEE',
-    background: '#151718',
+    text: '#FFFFFF',
+    background: '#000000',
     tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
+    tabIconDefault: '#8E8E93',
     tabIconSelected: tintColorDark,
+    primary: '#0A84FF',
+    secondary: '#5E5CE6',
+    accent: '#FF9F0A',
+    success: '#30D158',
+    warning: '#FF9F0A',
+    error: '#FF453A',
+    card: '#1C1C1E',
+    border: '#38383A',
+    notification: '#FF453A',
+    placeholder: '#8E8E93',
+    disabled: '#636366',
+    darkGray: '#8E8E93',
   },
 };
+
+export default Colors;
