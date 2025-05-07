@@ -1,5 +1,7 @@
-import strong from './strong.json';
+import Strong from './Strong.json';
+import Protected from './protected.json';
 
 export const Json = {
-  strong: strong,
+  Strong: Strong,
+  Protected: Protected,
 };

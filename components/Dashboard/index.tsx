@@ -7,12 +7,16 @@ import {
   FlatList,
   TouchableOpacity,
   Animated,
+  StyleSheet,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Avatar, Card, Button } from 'react-native-paper';
 import { useAnimatedStyle, withSpring } from 'react-native-reanimated'; // Reanimated for smooth animations
+import { useTheme } from '@/context/ThemeContext';
+import { ThemedText } from '../ThemedText';
 
 const Dashboard = () => {
+  const { colors } = useTheme();
   const router = useRouter();
   const credentials = [
     {
@@ -58,19 +62,24 @@ const Dashboard = () => {
   });
 
   return (
-    <View className="flex-1 bg-gray-900">
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       {/* Top Bar */}
-      <View className="p-6 flex-row justify-between items-center">
-        <Text className="text-3xl font-bold text-white">Dashboard</Text>
+      <View style={styles.topBar}>
+        <ThemedText
+          style={[styles.headerText, { color: colors.darkGray }]}
+          type="title"
+        >
+          Dashboard
+        </ThemedText>
         <Avatar.Icon size={40} icon="account" />
       </View>
 
       {/* Search Bar */}
-      <View className="mx-6 mb-6">
+      <View style={styles.searchContainer}>
         <TextInput
           placeholder="Search credentials"
           placeholderTextColor="#B0B0B0"
-          className="p-4 bg-gray-700 rounded-xl text-white"
+          style={styles.searchInput}
         />
       </View>
 
@@ -79,36 +88,31 @@ const Dashboard = () => {
         data={credentials}
         keyExtractor={item => item.id.toString()}
         renderItem={({ item }) => (
-          <Card className="mx-6 mb-4 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 shadow-lg rounded-xl">
-            <Card.Content className="flex-row items-center space-x-4 p-4 gap-x-4">
-              <Avatar.Image size={40} source={{ uri: item.icon }} />
-              <View className="flex-1">
-                <Text className="text-lg font-semibold text-white">
-                  {item.title}
-                </Text>
-                <Text className="text-sm text-gray-300">{item.username}</Text>
-              </View>
-              <Button
-                mode="contained"
-                className="bg-white text-black"
-                onPress={() => {}}
-              >
-                View
-              </Button>
-            </Card.Content>
+          <Card style={styles.credentialCard}>
+            <View style={styles.cardContentWrapper}>
+              <Card.Content style={styles.cardContent}>
+                <Avatar.Image size={40} source={{ uri: item.icon }} />
+                <View style={styles.cardTextContainer}>
+                  <Text style={styles.cardTitle}>{item.title}</Text>
+                  <Text style={styles.cardSubtitle}>{item.username}</Text>
+                </View>
+                <Button
+                  mode="contained"
+                  style={styles.viewButton}
+                  onPress={() => {}}
+                >
+                  View
+                </Button>
+              </Card.Content>
+            </View>
           </Card>
         )}
       />
 
-      {/* Animated Floating Action Button */}
-      <Animated.View
-        style={[fabStyle, { position: 'absolute', bottom: 20, right: 20 }]}
-      >
-        <TouchableOpacity
-          onPress={handleFabPress}
-          className="bg-blue-600 p-6 rounded-full shadow-xl"
-        >
-          <Text className="text-white text-lg font-semibold">+</Text>
+      {/* Floating Action Button */}
+      <Animated.View style={[fabStyle, styles.fabContainer]}>
+        <TouchableOpacity onPress={handleFabPress} style={styles.fabButton}>
+          <Text style={styles.fabText}>+</Text>
         </TouchableOpacity>
       </Animated.View>
     </View>
@@ -116,3 +120,74 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  topBar: {
+    padding: 24,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  headerText: {
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+  searchContainer: {
+    marginHorizontal: 24,
+    marginBottom: 24,
+  },
+  searchInput: {
+    padding: 16,
+    backgroundColor: '#374151', // bg-gray-700
+    borderRadius: 12,
+    color: '#FFFFFF',
+  },
+  cardContentWrapper: {
+    borderRadius: 16,
+    overflow: 'hidden',
+  },
+  credentialCard: {
+    marginHorizontal: 24,
+    marginBottom: 16,
+    backgroundColor: '#4f46e5', // fallback for gradient
+    borderRadius: 16,
+    elevation: 6, // shadow
+  },
+  cardContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 16,
+    padding: 16,
+  },
+  cardTextContainer: {
+    flex: 1,
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#FFFFFF',
+  },
+  cardSubtitle: {
+    fontSize: 14,
+    color: '#D1D5DB', // gray-300
+  },
+  fabContainer: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+  },
+  fabButton: {
+    backgroundColor: '#2563EB', // bg-blue-600
+    padding: 24,
+    borderRadius: 100,
+    elevation: 10,
+  },
+  fabText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: '600',
+  },
+});
