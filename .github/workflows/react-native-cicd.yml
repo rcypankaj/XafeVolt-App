@@ -95,10 +95,12 @@ jobs:
         run: |
            echo "Decoding credentials.json..."
            echo "${CREDENTIALS_JSON_BASE64}" | base64 -d > credentials.json
+           echo "${CREDENTIALS_JSON_BASE64}"
            echo "✅ credentials.json decoded"
 
            echo "Decoding keystore.jks..."
            echo "${KEYSTORE_BASE64}" | base64 -d > keystore.jks
+           echo "${KEYSTORE_BASE64}"
            echo "✅ keystore.jks decoded"
 
       - name: 📱 Setup EAS build cache
