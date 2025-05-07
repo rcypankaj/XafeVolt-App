@@ -93,10 +93,8 @@ jobs:
 
       - name: 🔐 Decode Keystore
         run: |
-          echo "$KEYSTORE_BASE64" | base64 -d > keystore.jks
-        shell: bash
-        env:
-          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          echo $CREDENTIALS_JSON_BASE64 | base64 -d > credentials.json
+          echo $KEYSTORE_BASE64 | base64 -d > keystore.jks
 
       - name: 📱 Setup EAS build cache
         uses: actions/cache@v3

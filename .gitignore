@@ -39,4 +39,4 @@ app-example
 
 keystore.*
 credentials/*
-credentials.json
+credentials.*

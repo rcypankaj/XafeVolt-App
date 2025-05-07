@@ -15,26 +15,14 @@
       "autoIncrement": true,
       "android": {
         "buildType": "apk",
-        "credentialsSource": "local",
-        "keystore": {
-          "keystorePath": "./keystore.jks",
-          "keystorePassword": "${KEYSTORE_PASSWORD}",
-          "keyAlias": "${KEY_ALIAS}",
-          "keyPassword": "${KEY_PASSWORD}"
-        }
+        "credentialsSource": "local"
       }
     },
     "production": {
       "autoIncrement": true,
       "android": {
         "buildType": "apk",
-        "credentialsSource": "local",
-        "keystore": {
-          "keystorePath": "./keystore.jks",
-          "keystorePassword": "${KEYSTORE_PASSWORD}",
-          "keyAlias": "${KEY_ALIAS}",
-          "keyPassword": "${KEY_PASSWORD}"
-        }
+        "credentialsSource": "local"
       }
     }
   },
