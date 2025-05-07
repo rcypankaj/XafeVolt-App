@@ -23,6 +23,8 @@ on:
 env:
   EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
   NODE_OPTIONS: --openssl-legacy-provider
+  CREDENTIALS_JSON_BASE64: ${{ secrets.CREDENTIALS_JSON_BASE64 }}
+  KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
 
 jobs:
   check-skip:
