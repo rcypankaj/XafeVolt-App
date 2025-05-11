@@ -93,6 +93,8 @@ jobs:
         run: |
           yarn install
           yarn global add eas-cli@latest
+          yarn add eslint-config-expo
+          yarn expo install --check
 
       - name: 🔐 Decode Keystore
         run: |
