@@ -93,6 +93,24 @@ jobs:
           yarn install
           yarn global add eas-cli@latest
 
+      - name: 🔍 Check metro.config.js content
+        run: |
+          echo "Checking metro.config.js"
+          cat metro.config.js
+
+      - name: ⬇️ Install EAS CLI
+        run: npm install -g eas-cli
+
+      - name: ⬇️ Install Expo CLI
+        run: npm install -g expo-cli
+
+      - name: 📂 Ensure correct working directory
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "Listing contents:"
+          ls -la
+
       - name: 🔐 Decode Keystore
         run: |
           echo "Decoding credentials.json..."
@@ -110,6 +128,15 @@ jobs:
           key: ${{ runner.os }}-eas-build-local-${{ hashFiles('**/package.json') }}
           restore-keys: |
             ${{ runner.os }}-eas-build-local-
+
+            - name: ⚡️ Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
 
       - name: 🔄 Verify EAS CLI installation
         run: |
