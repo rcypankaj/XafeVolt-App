@@ -11,6 +11,8 @@ import {
   PlusJakartaSans_600SemiBold,
   PlusJakartaSans_700Bold,
 } from '@expo-google-fonts/plus-jakarta-sans';
+import * as Updates from 'expo-updates';
+
 import { SplashScreen, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
@@ -39,10 +41,8 @@ export default function RootLayout() {
     'PlusJakartaSans-SemiBold': PlusJakartaSans_600SemiBold,
     'PlusJakartaSans-Bold': PlusJakartaSans_700Bold,
   });
-  
-  const {
-    isUpdatePending
-  } = Updates.useUpdates();
+
+  const { isUpdatePending } = Updates.useUpdates();
 
   useEffect(() => {
     if (isUpdatePending) {
