@@ -121,7 +121,7 @@ jobs:
           echo "${KEYSTORE_BASE64}" | base64 -d > keystore.jks
           echo "✅ keystore.jks decoded"
 
-      - name: 📱 Setup EAS build cache
+            - name: 📱 Setup EAS build cache
         uses: actions/cache@v3
         with:
           path: ~/.eas-build-local
@@ -129,14 +129,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-eas-build-local-
 
-            - name: ⚡️ Cache node_modules
+      - name: ⚡️ Cache node_modules
         uses: actions/cache@v3
         with:
           path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-node-
-
 
       - name: 🔄 Verify EAS CLI installation
         run: |
